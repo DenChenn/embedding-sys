@@ -147,6 +147,10 @@ videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
 time.sleep(1)
 
 url = 'https://b861-2001-b400-e353-6d54-a1c9-9d14-ae98-da38.jp.ngrok.io/sync/object_detection'
+headers={
+    'Content-type':'application/json',
+    'Accept':'application/json'
+}
 
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 while True:
@@ -190,7 +194,7 @@ while True:
 
             data = {'object': str(label)}
             # call api here
-            r = requests.post(url, data=data)
+            r = requests.post(url, data=data, headers=headers)
 
             time.sleep(5)
 
