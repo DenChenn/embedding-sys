@@ -5,6 +5,7 @@ import numpy as np
 from threading import Thread
 import importlib.util
 import time
+import requests
 
 # Define VideoStream class to handle streaming of video from webcam in separate processing thread
 # Source - Adrian Rosebrock, PyImageSearch: https://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
@@ -145,6 +146,8 @@ else: # This is a TF1 model
 videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
 time.sleep(1)
 
+url = 'https://b861-2001-b400-e353-6d54-a1c9-9d14-ae98-da38.jp.ngrok.io/sync/object_detection'
+
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 while True:
     # Grab frame from video stream
@@ -184,7 +187,11 @@ while True:
             labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
             label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
             print(label)
+
+            data = {'object': str(label)}
             # call api here
+            r = requests.post(url, data=data)
+
             time.sleep(5)
 
     # Press 'q' to quit
