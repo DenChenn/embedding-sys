@@ -194,7 +194,7 @@ while True:
 
             data = {'object': str(label)}
             # call api here
-            r = requests.post(url, data=data, headers=headers)
+            r = requests.post(url, json=data, headers=headers)
 
             time.sleep(5)
 
