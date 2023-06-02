@@ -151,6 +151,7 @@ headers={
     'Content-type':'application/json',
     'Accept':'application/json'
 }
+json_key = 'objects'
 
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 while True:
@@ -177,6 +178,7 @@ while True:
     scores = interpreter.get_tensor(output_details[scores_idx]['index'])[0] # Confidence of detected objects
 
     # Loop over all detections and draw detection box if confidence is above minimum threshold
+    data = {json_key: []}
     for i in range(len(scores)):
         if (scores[i] > min_conf_threshold) and (scores[i] <= 1.0):
 
@@ -192,11 +194,10 @@ while True:
             label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
             print(label)
 
-            data = {'object': str(label)}
-            # call api here
-            r = requests.post(url, json=data, headers=headers)
-
-            time.sleep(5)
+            data[json_key].append(label)
+    # call api here
+    r = requests.post(url, json=data, headers=headers)
+    time.sleep(5)
 
     # Press 'q' to quit
     if cv2.waitKey(1) == ord('q'):
