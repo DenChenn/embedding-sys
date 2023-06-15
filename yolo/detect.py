@@ -73,7 +73,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   json_key = 'objects'
 
   # Continuously capture images from the camera and run inference
-  while cap.isOpened():
+  while True:
     print("running")
     success, image = cap.read()
     if not success:
@@ -96,7 +96,6 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     # Draw keypoints and edges on input image
     image, names = utils.visualize(image, detection_result)
     r = requests.post(url, json={json_key: names}, headers=headers)
-    time.sleep(1)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
