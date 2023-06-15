@@ -97,6 +97,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     image, names = utils.visualize(image, detection_result)
     r = requests.post(url, json={json_key: names}, headers=headers)
     print(r.status_code)
+    time.sleep(5)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
