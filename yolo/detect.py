@@ -65,7 +65,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
   # requests
 
-  url = ' https://1ccb-180-177-2-79.jp.ngrok.io/sync/object_detection'
+  url = 'https://1ccb-180-177-2-79.jp.ngrok.io/sync/object_detection'
   headers={
     'Content-type':'application/json',
     'Accept':'application/json'
@@ -74,6 +74,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
   # Continuously capture images from the camera and run inference
   while cap.isOpened():
+    print("running")
     success, image = cap.read()
     if not success:
       sys.exit(
@@ -95,6 +96,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     # Draw keypoints and edges on input image
     image, names = utils.visualize(image, detection_result)
     r = requests.post(url, json={json_key: names}, headers=headers)
+    time.sleep(1)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
