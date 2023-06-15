@@ -65,7 +65,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
   # requests
 
-  url = 'http://localhost:8080/sync/object_detection'
+  url = ' https://1ccb-180-177-2-79.jp.ngrok.io/sync/object_detection'
   headers={
     'Content-type':'application/json',
     'Accept':'application/json'
